@@ -32,7 +32,7 @@ app.use('/api/photo', photoRoutes);
 
 // Ruta para servir la SPA
 app.get('/', (req, res) => {
-    res.send('Recetas API');
+    res.send('Control de Actividades API');
 });
 
 export default app;

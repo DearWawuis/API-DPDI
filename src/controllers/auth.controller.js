@@ -65,7 +65,7 @@ exports.register = async (req, res) => {
         html: `
                 <p>Hola ${name},</p>
                 <p>Gracias por registrarte. Haz clic en el siguiente enlace para activar tu cuenta:</p>
-                <p><a href="https://mob-uteq-api.vercel.app/api/verify/${confirmationCode}">Activar cuenta</a></p>
+                <p><a href="https://api-dpdi.vercel.app/api/verify/${confirmationCode}">Activar cuenta</a></p>
                 <br/>
                 <p>Atentamente / Kind regards,</p>
                 <p><strong>IT Solutions</strong><br/>
