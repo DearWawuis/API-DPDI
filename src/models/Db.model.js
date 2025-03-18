@@ -4,20 +4,22 @@ const mysql = require('mysql2');
 // Configurar el pool de conexiones a MySQL (con los datos de AWS)
 const pool = mysql.createPool({
 
-  /*
+
   //Conexión a bd en Railway
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   port: process.env.DB_PORT,
-  */
 
+
+  /*
   //Conexión a bd en AWS
   host: 'mobuteq.cxk8g0o2e0ju.us-east-2.rds.amazonaws.com',
   user: 'admin',
   password: 'B4ckintha2024NEW',
   database: 'controlActividad',
+  */
   
   waitForConnections: true,     // Esperar si todas las conexiones están ocupadas
   connectionLimit: 50,          // Número máximo de conexiones en el pool
