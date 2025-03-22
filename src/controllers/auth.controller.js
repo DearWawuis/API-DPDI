@@ -169,17 +169,17 @@ exports.login = (req, res) => {
 
       // Generar un token JWT
       const token = jwt.sign(
-        { id: user.id, email: user.email }, // Payload del token
+        { id: user.id, email: user.correo }, // Payload del token
         process.env.SECRET, // Clave secreta
         { expiresIn: process.env.JWT_EXPIRES_IN || "1h" } // Tiempo de expiración
       );
 
       // Devolver el token y la información del usuario (sin la contraseña)
       const userResponse = {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        roles: user.roles,
+        id: user.id,
+        name: user.nombre,
+        email: user.correo,
+        roles: user.rol,
         verificado: user.verificado,
       };
 
