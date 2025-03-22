@@ -33,3 +33,13 @@ exports.activateUser = (confirmationCode, callback) => {
     callback(null, result);
   });
 };
+
+exports.deleteById = (userId, callback) => {
+  const sql = 'DELETE FROM usuarios WHERE id = ?'; // Asegúrate de que la columna se llame "id"
+  
+  // Usamos el pool para ejecutar la consulta
+  pool.query(sql, [userId], (err, result) => {
+    if (err) return callback(err);
+    callback(null, result);
+  });
+};

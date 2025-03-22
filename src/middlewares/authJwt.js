@@ -25,3 +25,25 @@ export const verifyToken = async (req, res, next) => {
         res.status(401).json({ message: 'Token inválido o expirado' });
     }
 };
+
+export const authMiddleware = (req, res, next) => {
+    try {
+        // Obtener el token del encabezado de la solicitud
+        const token = req.headers.authorization?.split(' ')[1]; // Formato: "Bearer <token>"
+        if (!token) {
+            return res.status(401).json({ message: "Token no proporcionado" });
+        }
+
+        // Verificar el token
+        const decoded = jwt.verify(token, process.env.SECRET);
+
+        // Adjuntar el payload del token a la solicitud
+        req.user = decoded;
+
+        // Pasar al siguiente middleware o controlador
+        next();
+    } catch (error) {
+        console.error("Error en authMiddleware:", error);
+        res.status(401).json({ message: "Token inválido o expirado" });
+    }
+};
