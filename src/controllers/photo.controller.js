@@ -38,10 +38,9 @@ const getAllPhotos = async (req, res) => {
   }
 };
 
-// Eliminar una foto
 const deletePhoto = async (req, res) => {
   const { photoId } = req.params;
-  const userId = req.user._id; // Obtener el ID del usuario autenticado
+  const userId = req.user.id; // Obtener el ID del usuario autenticado
 
   try {
     const photo = await Photo.findById(photoId);
@@ -50,7 +49,7 @@ const deletePhoto = async (req, res) => {
     }
 
     // Verificar que el usuario es el propietario de la foto
-    if (photo.userId.toString() !== userId.toString()) {
+    if (photo.userId !== Number(userId)) {
       return res.status(403).json({ message: 'No tienes permiso para eliminar esta foto' });
     }
 
