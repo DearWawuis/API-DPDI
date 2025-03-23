@@ -5,6 +5,7 @@ import authRoutes from './src/routes/auth.routes';
 import photoRoutes from './src/routes/photo.routes';
 import viewsRoutes from './src/routes/views.routes'; // Importar rutas de vistas
 import connectDB from './src/config/db';
+import path from 'path';
 
 const app = express();
 
@@ -24,10 +25,10 @@ app.use(cors(corsOptions));
 
 // Configurar el motor de plantillas EJS
 app.set('view engine', 'ejs');
-app.set('views', './src/views/'); // Carpeta donde están las vistas
+app.set('views', path.join(__dirname, 'src/views')); // Usa rutas absolutas
 
 // Middleware para servir archivos estáticos (CSS, JS, imágenes)
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public'))); // Usa rutas absolutas para archivos estáticos
 
 // Middleware para parsear cuerpos de solicitud como JSON
 app.use(express.json());
