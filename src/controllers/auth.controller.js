@@ -220,3 +220,9 @@ exports.deleteAccount = (req, res) => {
       res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
+// Controlador para validar el token
+exports.validateToken = (req, res) => {
+  // Si el middleware de autenticación no lanzó un error, el token es válido
+  res.json({ valid: true });
+};
