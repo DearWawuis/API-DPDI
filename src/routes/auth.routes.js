@@ -10,9 +10,6 @@ router.post('/register', authController.register);
 // Ruta para iniciar sesión
 router.post('/login', authController.login);
 
-// Ruta para verificar el correo
-router.get('/verify/:confirmationCode', authController.verify);
-
 // Ruta para eliminar una cuenta (protegida por autenticación)
 router.delete('/delete-account', authMiddleware, authController.deleteAccount);
 
