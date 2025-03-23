@@ -6,6 +6,10 @@ const photoSchema = new mongoose.Schema(
       type: String, // Almacenamos la imagen en base64
       required: true,
     },
+    userId: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true, // Agrega timestamps de creación y actualización
