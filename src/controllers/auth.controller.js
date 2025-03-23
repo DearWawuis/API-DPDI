@@ -22,18 +22,21 @@ const validatePassword = (password) => {
 
 // Registrar un usuario
 exports.register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, acceptedPolicies, acceptedPrivacy } = req.body;
 
-  if (!name || !email || !password) {
+  // Validar campos obligatorios
+  if (!name || !email || !password || !acceptedPolicies || !acceptedPrivacy) {
     return res
       .status(400)
       .send({ message: "Todos los campos son obligatorios." });
   }
 
+  // Validar el formato del correo
   if (!validator.isEmail(email)) {
     return res.status(400).send({ message: "Correo no es válido." });
   }
 
+  // Validar la contraseña
   if (!validatePassword(password)) {
     return res.status(400).send({
       message:
@@ -54,11 +57,17 @@ exports.register = async (req, res) => {
     // Encriptar la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Obtener la fecha y hora actual
+    const acceptanceDate = new Date();
+
     // Insertar el usuario y generar un código de confirmación
     User.create(
       name,
       email,
       hashedPassword,
+      acceptedPolicies, // Nuevo campo: aceptación de políticas
+      acceptedPrivacy,  // Nuevo campo: aceptación de aviso de privacidad
+      acceptanceDate,   // Nuevo campo: fecha de aceptación
       (err, result, confirmationCode) => {
         if (err) {
           return res

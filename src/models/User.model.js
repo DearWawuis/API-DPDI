@@ -12,12 +12,37 @@ exports.findByEmail = (email, callback) => {
 };
 
 // Crear un nuevo usuario
-exports.create = (name, email, hashedPassword, callback) => {
-  const sql = 'INSERT INTO usuarios (nombre, correo, contrasena, verificado, token_verificacion) VALUES (?, ?, ?, ?, ?)';
-  const confirmationCode = require('crypto').randomBytes(32).toString('hex'); // Código de confirmación
-  
-  // Usamos el pool para ejecutar la consulta
-  pool.query(sql, [name, email, hashedPassword, false, confirmationCode], (err, result) => {
+exports.create = (name, email, hashedPassword, acceptedPolicies, acceptedPrivacy, acceptanceDate, callback) => {
+  const sql = `
+    INSERT INTO usuarios (
+      nombre, 
+      correo, 
+      contrasena, 
+      verificado, 
+      token_verificacion, 
+      accepted_policies, 
+      accepted_privacy, 
+      acceptance_date
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  // Generar un código de confirmación único
+  const confirmationCode = require('crypto').randomBytes(32).toString('hex');
+
+  // Parámetros para la consulta SQL
+  const params = [
+    name,
+    email,
+    hashedPassword,
+    false, // El usuario no está verificado inicialmente
+    confirmationCode, // Código de confirmación
+    acceptedPolicies, // Aceptación de políticas
+    acceptedPrivacy,  // Aceptación de aviso de privacidad
+    acceptanceDate    // Fecha de aceptación
+  ];
+
+  // Ejecutar la consulta usando el pool de conexiones
+  pool.query(sql, params, (err, result) => {
     if (err) return callback(err);
     callback(null, result, confirmationCode); // Devolvemos el confirmationCode para el correo de verificación
   });
