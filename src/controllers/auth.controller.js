@@ -124,16 +124,20 @@ exports.verify = (req, res) => {
 
   User.activateUser(confirmationCode, (err, result) => {
     if (err) {
-      return res.status(500).send({ message: "Error al activar la cuenta." });
+      return res.status(500).render('verify', {
+        message: "Error al activar la cuenta. Inténtelo de nuevo más tarde.",
+      });
     }
 
     if (result.affectedRows === 0) {
-      return res
-        .status(400)
-        .send({ message: "Código de verificación inválido." });
+      return res.status(400).render('verify', {
+        message: "Código de verificación inválido.",
+      });
     }
 
-    res.send({ message: "Cuenta activada exitosamente." });
+    res.render('verify', {
+      message: "Cuenta activada exitosamente. Puede cerrar esta pestaña.",
+    });
   });
 };
 
